@@ -13,3 +13,67 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  created_At DateTime @default(now())
+  updated_At DateTime @updatedAt
+
+  @@map("users")
+}
+
+model category {
+  id        String   @id @default(cuid())
+  name      String
+  created_At DateTime @default(now())
+  updated_At DateTime @updatedAt
+
+  @@map("categories")
+  products Product[]
+}
+
+model Product {
+  id        String   @id @default(cuid())
+  name      String
+  price     Float
+  description String
+  banner String?
+  created_At DateTime @default(now())
+  updated_At DateTime @updatedAt
+
+  category category @relation(fields: [category_Id], references: [id])
+
+  @@map("products")
+  category_Id String
+  items Item[]
+}
+
+model Order{
+  id       String   @id @default(cuid())
+  table    Int
+  status   Boolean @default(false)
+  draft     Boolean @default(true)
+  name    String?
+
+  created_At DateTime @default(now())
+  updated_At DateTime @updatedAt
+
+  @@map("orders")
+  items Item[]
+}
+
+model Item {
+  id       String   @id @default(cuid())
+  amount   Int
+
+  created_At DateTime @default(now())
+  updated_At DateTime @updatedAt
+
+  order Order @relation(fields: [order_Id], references: [id])
+  product Product @relation(fields: [product_Id], references: [id])
+  @@map("items")
+  order_Id String
+  product_Id String
+}
+
