@@ -14,39 +14,40 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String?
-  created_At DateTime @default(now())
-  updated_At DateTime @updatedAt
+  id         String   @id @default(cuid())
+  email      String   @unique
+  name       String?
+  password   String
+  createdAt  DateTime @default(now()) 
+  updatedAt  DateTime @updatedAt      
 
   @@map("users")
 }
 
-model category {
-  id        String   @id @default(cuid())
+model Category { 
+  id        String    @id @default(cuid())
   name      String
-  created_At DateTime @default(now())
-  updated_At DateTime @updatedAt
+  createdAt DateTime  @default(now()) 
+  updatedAt DateTime  @updatedAt      
 
   @@map("categories")
-  products Product[]
+  products  Product[]
 }
 
 model Product {
-  id        String   @id @default(cuid())
-  name      String
-  price     Float
+  id          String   @id @default(cuid())
+  name        String
+  price       Float
   description String
-  banner String?
-  created_At DateTime @default(now())
-  updated_At DateTime @updatedAt
+  banner      String?
+  createdAt   DateTime @default(now()) 
+  updatedAt   DateTime @updatedAt      
 
-  category category @relation(fields: [category_Id], references: [id])
+  category    Category @relation(fields: [categoryId], references: [id]) 
+  categoryId  String   
 
   @@map("products")
-  category_Id String
-  items Item[]
+  items       Item[]
 }
 
 model Order{
