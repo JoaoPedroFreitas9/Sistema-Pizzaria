@@ -16,8 +16,15 @@ router.post("/login", new AuthUserController().handle);
 router.get("/me", isAuthenticated, new DetailUserController().handle);
 
 //--ROTAS CATEGORY--
-router.post("/category",isAuthenticated,new CreateCategoryController().handle
+router.post(
+  "/category",
+  isAuthenticated,
+  new CreateCategoryController().handle
 );
 //--LIST CATEGORY--
 router.get("/category", isAuthenticated, new ListCategoryController().handle);
+
+//-- ROTAS PRODUCT --
+
+
 export { router };
