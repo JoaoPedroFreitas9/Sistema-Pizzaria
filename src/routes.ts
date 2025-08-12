@@ -11,11 +11,12 @@ import { ListCategoryController } from "./controllers/category/ListCategoryContr
 import { CreateProductController } from "./controllers/product/CreateProductController";
 import { ListByCategoryController } from "./controllers/product/ListiByCategoryController";
 import { CreateOrderController } from "./controllers/order/CreateOrderController";
+import { RemoveOrderController } from "./controllers/order/RemoveOrderController";
 
 import uploadConfig from "./config/multer";
 
 const router = Router();
-
+//-- MULTER --
 const upload = multer(uploadConfig.upload("./tmp"));
 //--ROTAS USER--
 router.post("/users", new CreateUserController().handle);
@@ -48,5 +49,5 @@ router.get(
 
 //-- ROTAS ORDER --
 router.post("/order", isAuthenticated, new CreateOrderController().handle);
-
+router.delete("/order", isAuthenticated, new RemoveOrderController().handle);
 export { router };
