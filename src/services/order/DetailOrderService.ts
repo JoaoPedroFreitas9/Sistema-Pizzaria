@@ -1,10 +1,22 @@
 import prismaClient from "../../prisma";
- 
 
-class DetailUserService{
-    async execute(){
-        
-    }
+interface DetailRequest {
+  order_id: string;
 }
 
-export {DetailUserService}
+class DetailOrderService {
+  async execute({ order_id }: DetailRequest) {
+    const orders = await prismaClient.item.findMany({
+      where: {
+        order_Id: order_id,
+      },
+      include: {
+        product: true,
+        order: true,
+      },
+    });
+    return orders;
+  }
+}
+
+export { DetailOrderService };
